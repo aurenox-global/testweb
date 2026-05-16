@@ -1,0 +1,2418 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alma & Esencia — Jabones Artesanales & Joyas Finas</title>
+    <link href="https://cdn.jsdelivr.net/npm/@fontsource/playfair-display@5.0.0/index.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fontsource/inter@5.0.0/index.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --cream: #FAF9F6;
+            --white: #FFFFFF;
+            --text-primary: #2D2D2D;
+            --text-secondary: #6B6B6B;
+            --gold: #C5A059;
+            --gold-light: #D4B87A;
+            --rose: #B88A8A;
+            --rose-light: #D4B0B0;
+            --border: #E8E4DF;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
+            --shadow-lg: 0 8px 32px rgba(0,0,0,0.08);
+            --radius: 8px;
+            --transition: all 0.3s ease;
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--cream);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(250, 249, 246, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            transition: var(--transition);
+        }
+
+        .header.scrolled {
+            box-shadow: var(--shadow-sm);
+        }
+
+        .header-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 72px;
+        }
+
+        .logo {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-decoration: none;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+        }
+
+        .nav-desktop {
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
+        }
+
+        .nav-desktop a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-desktop a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1.5px;
+            background: var(--gold);
+            transition: var(--transition);
+        }
+
+        .nav-desktop a:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-desktop a:hover::after {
+            width: 100%;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .cart-btn {
+            position: relative;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            color: var(--text-primary);
+            transition: var(--transition);
+        }
+
+        .cart-btn:hover {
+            color: var(--gold);
+        }
+
+        .cart-btn svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: 2px;
+            right: 0;
+            background: var(--gold);
+            color: var(--white);
+            font-size: 0.65rem;
+            font-weight: 700;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: scale(0.5);
+            transition: var(--transition);
+        }
+
+        .cart-count.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--text-primary);
+            transition: var(--transition);
+            border-radius: 2px;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        .nav-mobile {
+            display: none;
+            position: fixed;
+            top: 72px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--cream);
+            z-index: 999;
+            padding: 2rem;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: var(--transition);
+        }
+
+        .nav-mobile.open {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .nav-mobile a {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: var(--transition);
+        }
+
+        .nav-mobile a:hover {
+            color: var(--gold);
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            margin-top: 72px;
+            min-height: calc(100vh - 72px);
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+
+        .hero-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.95);
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(250,249,246,0.85) 0%, rgba(250,249,246,0.4) 50%, rgba(250,249,246,0.1) 100%);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            width: 100%;
+        }
+
+        .hero-text {
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--white);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .hero-badge svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .hero-title {
+            font-family: var(--font-heading);
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 600;
+            line-height: 1.15;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-title span {
+            color: var(--gold);
+            font-style: italic;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 2.5rem;
+            max-width: 480px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.875rem 2rem;
+            border-radius: 50px;
+            font-family: var(--font-body);
+            font-size: 0.875rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--gold);
+            color: var(--white);
+            box-shadow: 0 4px 16px rgba(197, 160, 89, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(197, 160, 89, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1.5px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+            transform: translateY(-2px);
+        }
+
+        .hero-visual {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: fadeInRight 1s ease 0.3s forwards;
+            opacity: 0;
+        }
+
+        .hero-image-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .hero-image-wrapper img {
+            width: 100%;
+            height: auto;
+            border-radius: 16px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .hero-float-card {
+            position: absolute;
+            background: var(--white);
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+            box-shadow: var(--shadow-md);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .hero-float-card.card-1 {
+            bottom: -20px;
+            left: -30px;
+        }
+
+        .hero-float-card.card-2 {
+            top: -15px;
+            right: -20px;
+            animation-delay: 1.5s;
+        }
+
+        .float-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .float-icon.green {
+            background: #E8F5E9;
+        }
+
+        .float-icon.pink {
+            background: #FCE4EC;
+        }
+
+        .float-text small {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            display: block;
+        }
+
+        .float-text strong {
+            font-size: 0.85rem;
+            color: var(--text-primary);
+        }
+
+        /* ===== SECTION COMMON ===== */
+        .section {
+            padding: 6rem 2rem;
+        }
+
+        .section-container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-label {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 0.75rem;
+        }
+
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: clamp(2rem, 3.5vw, 2.75rem);
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .section-desc {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            max-width: 560px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .divider {
+            width: 60px;
+            height: 2px;
+            background: var(--gold);
+            margin: 1.25rem auto 0;
+            border-radius: 2px;
+        }
+
+        /* ===== PRODUCTS ===== */
+        .products {
+            background: var(--white);
+        }
+
+        .product-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .product-tab {
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            border: 1.5px solid var(--border);
+            background: transparent;
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .product-tab.active,
+        .product-tab:hover {
+            background: var(--gold);
+            border-color: var(--gold);
+            color: var(--white);
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: var(--cream);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: var(--transition);
+            position: relative;
+            border: 1px solid transparent;
+        }
+
+        .product-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--border);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            z-index: 5;
+            padding: 0.35rem 0.85rem;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .badge-artisan {
+            background: var(--gold);
+            color: var(--white);
+        }
+
+        .badge-limited {
+            background: var(--rose);
+            color: var(--white);
+        }
+
+        .product-image {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 4/3;
+            background: var(--white);
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.08);
+        }
+
+        .product-wishlist {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--white);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            opacity: 0;
+            transform: scale(0.8);
+        }
+
+        .product-card:hover .product-wishlist {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .product-wishlist:hover {
+            background: var(--rose-light);
+        }
+
+        .product-wishlist svg {
+            width: 16px;
+            height: 16px;
+            color: var(--rose);
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-category {
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 0.4rem;
+        }
+
+        .product-name {
+            font-family: var(--font-heading);
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .product-desc {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .product-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .product-price {
+            font-family: var(--font-heading);
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .product-price small {
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-decoration: line-through;
+            margin-left: 0.5rem;
+            font-weight: 400;
+        }
+
+        .add-cart-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gold);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            color: var(--white);
+        }
+
+        .add-cart-btn:hover {
+            background: var(--gold-light);
+            transform: scale(1.1);
+        }
+
+        .add-cart-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .add-cart-btn.added {
+            background: #4CAF50;
+        }
+
+        /* ===== ABOUT / HANDMADE ===== */
+        .about {
+            background: var(--cream);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-image {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: 450px;
+            object-fit: cover;
+        }
+
+        .about-image-badge {
+            position: absolute;
+            bottom: 1.5rem;
+            left: 1.5rem;
+            background: var(--white);
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .about-image-badge .number {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--gold);
+            line-height: 1;
+        }
+
+        .about-image-badge .label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .about-content .section-label {
+            text-align: left;
+        }
+
+        .about-content .section-title {
+            text-align: left;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-text {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            line-height: 1.9;
+            margin-bottom: 2rem;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .value-item {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .value-icon {
+            width: 48px;
+            height: 48px;
+            min-width: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            background: var(--white);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .value-item h4 {
+            font-family: var(--font-heading);
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .value-item p {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* ===== TESTIMONIALS ===== */
+        .testimonials {
+            background: var(--white);
+            overflow: hidden;
+        }
+
+        .testimonials-track {
+            display: flex;
+            gap: 2rem;
+            transition: transform 0.5s ease;
+        }
+
+        .testimonial-card {
+            min-width: calc(33.333% - 1.333rem);
+            background: var(--cream);
+            border-radius: 16px;
+            padding: 2.5rem;
+            position: relative;
+        }
+
+        .testimonial-quote {
+            font-size: 2.5rem;
+            color: var(--gold);
+            font-family: var(--font-heading);
+            line-height: 1;
+            margin-bottom: 1rem;
+        }
+
+        .testimonial-text {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-style: italic;
+            margin-bottom: 1.5rem;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .testimonial-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .testimonial-author-info h5 {
+            font-family: var(--font-heading);
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .testimonial-author-info span {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .testimonial-stars {
+            color: var(--gold);
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+        }
+
+        .testimonials-nav {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2.5rem;
+        }
+
+        .testimonials-nav button {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 1.5px solid var(--border);
+            background: transparent;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            color: var(--text-primary);
+        }
+
+        .testimonials-nav button:hover {
+            background: var(--gold);
+            border-color: var(--gold);
+            color: var(--white);
+        }
+
+        .testimonials-nav button svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* ===== NEWSLETTER ===== */
+        .newsletter {
+            background: linear-gradient(135deg, #F5F0E8 0%, #FAF9F6 100%);
+            text-align: center;
+        }
+
+        .newsletter-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 2rem;
+            max-width: 480px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 0.875rem 1.5rem;
+            border: 1.5px solid var(--border);
+            border-radius: 50px;
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            background: var(--white);
+            color: var(--text-primary);
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .newsletter-form input:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(197, 160, 89, 0.15);
+        }
+
+        .newsletter-form input::placeholder {
+            color: #B0B0B0;
+        }
+
+        .newsletter-form .error-msg {
+            font-size: 0.75rem;
+            color: #E53935;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        .newsletter-form .error-msg.visible {
+            display: block;
+        }
+
+        .newsletter-success {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1rem;
+            background: #E8F5E9;
+            color: #2E7D32;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-top: 1rem;
+        }
+
+        .newsletter-success.visible {
+            display: flex;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: var(--text-primary);
+            color: var(--cream);
+            padding: 4rem 2rem 2rem;
+        }
+
+        .footer-container {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand .logo {
+            color: var(--cream);
+            margin-bottom: 1rem;
+        }
+
+        .footer-brand p {
+            font-size: 0.85rem;
+            color: #A0A0A0;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid #555;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--cream);
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+
+        .footer-social a:hover {
+            background: var(--gold);
+            border-color: var(--gold);
+        }
+
+        .footer-col h4 {
+            font-family: var(--font-heading);
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+            color: var(--cream);
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-col ul li a {
+            color: #A0A0A0;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: var(--transition);
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--gold);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #444;
+            padding-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-bottom p {
+            font-size: 0.8rem;
+            color: #888;
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .footer-bottom-links a {
+            font-size: 0.8rem;
+            color: #888;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-bottom-links a:hover {
+            color: var(--gold);
+        }
+
+        /* ===== CART SIDEBAR ===== */
+        .cart-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.4);
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .cart-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 400px;
+            max-width: 90vw;
+            background: var(--white);
+            z-index: 2001;
+            transform: translateX(100%);
+            transition: transform 0.4s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-sidebar.open {
+            transform: translateX(0);
+        }
+
+        .cart-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .cart-header h3 {
+            font-family: var(--font-heading);
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .cart-close {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+            color: var(--text-secondary);
+            transition: var(--transition);
+        }
+
+        .cart-close:hover {
+            color: var(--text-primary);
+        }
+
+        .cart-close svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .cart-items {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+        }
+
+        .cart-empty {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--text-secondary);
+        }
+
+        .cart-empty svg {
+            width: 48px;
+            height: 48px;
+            color: var(--border);
+            margin-bottom: 1rem;
+        }
+
+        .cart-empty p {
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .cart-empty small {
+            font-size: 0.8rem;
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border);
+            animation: fadeInUp 0.3s ease;
+        }
+
+        .cart-item-image {
+            width: 72px;
+            height: 72px;
+            border-radius: 8px;
+            overflow: hidden;
+            flex-shrink: 0;
+            background: var(--cream);
+        }
+
+        .cart-item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .cart-item-details {
+            flex: 1;
+        }
+
+        .cart-item-name {
+            font-family: var(--font-heading);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .cart-item-price {
+            font-size: 0.85rem;
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        .cart-item-qty {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .cart-item-qty button {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: transparent;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            color: var(--text-primary);
+            transition: var(--transition);
+        }
+
+        .cart-item-qty button:hover {
+            background: var(--cream);
+        }
+
+        .cart-item-qty span {
+            font-size: 0.85rem;
+            font-weight: 600;
+            min-width: 20px;
+            text-align: center;
+        }
+
+        .cart-item-remove {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-secondary);
+            padding: 4px;
+            align-self: flex-start;
+            transition: var(--transition);
+        }
+
+        .cart-item-remove:hover {
+            color: #E53935;
+        }
+
+        .cart-item-remove svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .cart-footer {
+            border-top: 1px solid var(--border);
+            padding: 1.5rem;
+        }
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .cart-total span {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .cart-total strong {
+            font-family: var(--font-heading);
+            font-size: 1.25rem;
+            color: var(--text-primary);
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 1rem;
+            border-radius: 50px;
+            background: var(--gold);
+            color: var(--white);
+            border: none;
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            letter-spacing: 0.5px;
+        }
+
+        .checkout-btn:hover {
+            background: var(--gold-light);
+        }
+
+        /* ===== TOAST ===== */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--text-primary);
+            color: var(--cream);
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            z-index: 3000;
+            opacity: 0;
+            transition: all 0.4s ease;
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .toast svg {
+            width: 20px;
+            height: 20px;
+            color: #81C784;
+        }
+
+        /* ===== SCROLL TO TOP ===== */
+        .scroll-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--gold);
+            color: var(--white);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-md);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: var(--transition);
+            z-index: 100;
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .scroll-top:hover {
+            background: var(--gold-light);
+            transform: translateY(-3px);
+        }
+
+        .scroll-top svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-subtitle {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .hero-visual {
+                display: none;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .about-image {
+                order: -1;
+            }
+
+            .about-image img {
+                height: 350px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .testimonial-card {
+                min-width: calc(50% - 1rem);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-desktop {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-mobile {
+                display: flex;
+            }
+
+            .section {
+                padding: 4rem 1.5rem;
+            }
+
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .testimonial-card {
+                min-width: calc(100% - 0rem);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="header" id="header">
+        <div class="header-inner">
+            <a href="#" class="logo">
+                <svg class="logo-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="16" cy="16" r="15" stroke="#C5A059" stroke-width="1.5"/>
+                    <path d="M16 8C16 8 10 14 10 18C10 21.31 12.69 24 16 24C19.31 24 22 21.31 22 18C22 14 16 8 16 8Z" fill="#C5A059" opacity="0.3"/>
+                    <path d="M16 10C16 10 12 14 12 17C12 19.21 13.79 21 16 21C18.21 21 20 19.21 20 17C20 14 16 10 16 10Z" fill="#C5A059"/>
+                </svg>
+                Alma & Esencia
+            </a>
+            <nav class="nav-desktop">
+                <a href="#inicio">Inicio</a>
+                <a href="#productos">Productos</a>
+                <a href="#nosotros">Nuestra Historia</a>
+                <a href="#testimonios">Testimonios</a>
+                <a href="#contacto">Contacto</a>
+            </nav>
+            <div class="header-actions">
+                <button class="cart-btn" id="cartBtn" aria-label="Carrito de compras">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M6 2L3 6V20C3 20.5304 3.21071 21.0391 3.58579 21.4142C3.96086 21.7893 4.46957 22 5 22H19C19.5304 22 20.0391 21.7893 20.4142 21.4142C20.7893 21.0391 21 20.5304 21 20V6L18 2H6Z"/>
+                        <path d="M3 6H21"/>
+                        <path d="M16 10C16 11.0609 15.5786 12.0783 14.8284 12.8284C14.0783 13.5786 13.0609 14 12 14C10.9391 14 9.92172 13.5786 9.17157 12.8284C8.42143 12.0783 8 11.0609 8 10"/>
+                    </svg>
+                    <span class="cart-count" id="cartCount">0</span>
+                </button>
+                <button class="hamburger" id="hamburgerBtn" aria-label="Menú">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+        <nav class="nav-mobile" id="navMobile">
+            <a href="#inicio" class="nav-mobile-link">Inicio</a>
+            <a href="#productos" class="nav-mobile-link">Productos</a>
+            <a href="#nosotros" class="nav-mobile-link">Nuestra Historia</a>
+            <a href="#testimonios" class="nav-mobile-link">Testimonios</a>
+            <a href="#contacto" class="nav-mobile-link">Contacto</a>
+        </nav>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero" id="inicio">
+        <div class="hero-bg">
+            <img src="https://image.qwenlm.ai/public_source/ed472311-7cac-4dbe-844a-49fa11cff082/124b370f7-ccc4-4a79-9c26-4a66c6cd93e1.png" alt="Jabones artesanales y joyas finas" loading="eager">
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="hero-text">
+                <div class="hero-badge">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+                    Hecho a mano con amor
+                </div>
+                <h1 class="hero-title">
+                    Belleza Natural,<br>
+                    <span>Elegancia Artesanal</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Descubre nuestra colección de jabones artesanales con ingredientes puros y joyas finas creadas con dedicación. Cada pieza cuenta una historia única.
+                </p>
+                <div class="hero-buttons">
+                    <a href="#productos" class="btn btn-primary">
+                        Explorar Colección
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12H19M19 12L12 5M19 12L12 19"/></svg>
+                    </a>
+                    <a href="#nosotros" class="btn btn-secondary">Nuestra Historia</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="hero-image-wrapper">
+                    <img src="https://image.qwenlm.ai/public_source/ed472311-7cac-4dbe-844a-49fa11cff082/1d77342dc-2881-415c-ae00-d9a03f75113f.png" alt="Proceso artesanal de jabones" loading="lazy">
+                    <div class="hero-float-card card-1">
+                        <div class="float-icon green">🌿</div>
+                        <div class="float-text">
+                            <small>Ingredientes</small>
+                            <strong>100% Naturales</strong>
+                        </div>
+                    </div>
+                    <div class="hero-float-card card-2">
+                        <div class="float-icon pink">✨</div>
+                        <div class="float-text">
+                            <small>Certificación</small>
+                            <strong>Plata & Oro 18K</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRODUCTS -->
+    <section class="section products" id="productos">
+        <div class="section-container">
+            <div class="section-header fade-in">
+                <span class="section-label">Nuestra Colección</span>
+                <h2 class="section-title">Productos Destacados</h2>
+                <p class="section-desc">Cada producto es elaborado artesanalmente con los mejores ingredientes y materiales seleccionados con esmero.</p>
+                <div class="divider"></div>
+            </div>
+
+            <div class="product-tabs fade-in">
+                <button class="product-tab active" data-filter="all">Todos</button>
+                <button class="product-tab" data-filter="soap">Jabones</button>
+                <button class="product-tab" data-filter="jewelry">Joyas</button>
+            </div>
+
+            <div class="product-grid" id="productGrid">
+                <!-- Product 1 -->
+                <div class="product-card fade-in" data-category="soap">
+                    <span class="product-badge badge-artisan">Artesanal</span>
+                    <div class="product-image">
+                        <img src="https://image.qwenlm.ai/public_source/ed472311-7cac-4dbe-844a-49fa11cff082/1f7794d21-2e3a-4107-ae4d-93268bbd9b9f.png" alt="Jabón de Lavanda" loading="lazy">
+                        <button class="product-wishlist" aria-label="Añadir a favoritos">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                        </button>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Jabón Artesanal</div>
+                        <h3 class="product-name">Jabón de Lavanda</h3>
+                        <p class="product-desc">Relajante jabón con aceite esencial de lavanda francesa y pétalos naturales.</p>
+                        <div class="product-bottom">
+                            <span class="product-price">€18.50</span>
+                            <button class="add-cart-btn" data-name="Jabón de Lavanda" data-price="18.50" data-img="https://image.qwenlm.ai/public_source/ed472311-7cac-4dbe-844a-49fa11cff082/1f7794d21-2e3a-4107-ae4d-93268bbd9b9f.png" aria-label="Añadir al carrito">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5V19M5 12H19"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="product-card fade-in" data-category="soap">
+                    <span class="product-badge badge-limited">Edición Limitada</span>
+                    <div class="product-image">
+                        <img src="https://image.qwenlm.ai/public_source/ed472311-7cac-4dbe-844a-49fa11cff082/126547893-de40-458d-9d60-2d0ac7f09f18.png" alt="Jabón de Rosa" loading="lazy">
+                        <button class="product-wishlist" aria-label="Añadir a favoritos">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                        </button>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Jabón Artesanal</div>
+                        <h3 class="product-name">Jabón de Rosa Damascena</h3>
+                        <p class="product-desc">Lujoso jabón con agua de rosas y aceite de argán para una piel sedosa.</p>
+                        <div class="product-bottom">
+                            <span class="product-price">€22.00</span>
+                            <button class="add-cart-btn" data-name="Jabón de Rosa Damascena" data-price="22.00" data-img="https://image.qwenlm.ai/public_source/ed472311-7cac-4dbe-844a-49fa11cff082/126547893-de40-458d-9d60-2d0ac7f09f18.png" aria-label="Añadir al carrito">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5V19M5 12H19"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="product-card fade-in" data-category="soap">
+                    <span class="product-badge badge-artisan">Artesanal</span>
+                    <div class="product-image">
+                        <img src="https://image.qwenlm.ai/public_source/ed472311-7cac-4dbe-844a-49fa11cff082/1da9667b3-312d-46c3-affe-422908949aa4.png" alt="Jabón de Miel y Avena" loading="lazy">
+                        <button class="product-wishlist" aria-label="Añadir a favoritos">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                        </button>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Jabón Artesanal</div>
+                        <h3 class="product-name">Jabón de Miel & Avena</h3>
+                        <p class="product-desc">Nutritivo jabón con miel orgánica y copos de avena para pieles sensibles.</p>
+                        <div class="product-bottom">
+                            <span class="product-price">€16.00</span>
+                            <button class="add-cart-btn" data-name="Jabón de Miel y Avena" data-price="16.00" data-img="https://image.qwenlm.ai/public_source/ed472311-7cac-4dbe-844a-49fa11cff082/1da9667b3-312d-46c3-affe-422908949aa4.png" aria-label="Añadir al carrito">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5V19M5 12H19"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="product-card fade-in" data-category="jewelry">
+                    <span class="product-badge badge-limited">Edición Limitada</span>
+                    <div class="product-image">
+                        <img src="https://image.qwenlm.ai/public_source/ed472311-7cac-4dbe-844a-49fa11cff082/1c39d56b6-372f-43bd-9fd2-1e373b3e3d7e.png" alt="Anillo de Oro con Diamante" loading="lazy">
+                        <button class="product-wishlist" aria-label="Añadir a favoritos">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                        </button>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Joyería Fina</div>
+                        <h3 class="product-name">Anillo Solitario Oro 18K</h3>
+                        <p class="product-desc">Elegante anillo en oro de 18 quilates con diamante certificado de 0.5ct.</p>
+                        <div class="product-bottom">
+                            <span class="product-price">€1,250 <small>€1,450</small></span>
+                            <button class="add-cart-btn" data-name="Anillo Solitario Oro 18K" data-price="1250.00" data-img="https://image.qwenlm.ai/public_source/ed472311-7cac-4dbe-844a-49fa11cff082/1c39d56b6-372f-43bd-9fd2-1e373b3e3d7e.png" aria-label="Añadir al carrito">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5V19M5 12H19"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 5 -->
+                <div class="product-card fade-in" data-category="jewelry">
+                    <span class="product-badge badge-artisan">Artesanal</span>
+                    <div class="product-image">
+                        <img src="https://image.qwenlm.ai/public_source/ed472311-7cac-4dbe-844a-49fa11cff082/1a355f5b1-aa65-4b0f-a5a0-e91481505c66.png" alt="Pendientes de Perla" loading="lazy">
+                        <button class="product-wishlist" aria-label="Añadir a favoritos">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                        </button>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Joyería Fina</div>
+                        <h3 class="product-name">Pendientes Perla & Oro</h3>
+                        <p class="product-desc">Delicados pendientes con perlas de agua dulce y engaste en oro de 14K.</p>
+                        <div class="product-bottom">
+                            <span class="product-price">€320</span>
+                            <button class="add-cart-btn" data-name="Pendientes Perla y Oro" data-price="320.00" data-img="https://image.qwenlm.ai/public_source/ed472311-7cac-4dbe-844a-49fa11cff082/1a355f5b1-aa65-4b0f-a5a0-e91481505c66.png" aria-label="Añadir al carrito">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5V19M5 12H19"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 6 -->
+                <div class="product-card fade-in" data-category="jewelry">
+                    <span class="product-badge badge-artisan">Artesanal</span>
+                    <div class="product-image">
+                        <img src="https://image.qwenlm.ai/public_source/ed472311-7cac-4dbe-844a-49fa11cff082/1d7c0d274-5c50-4da9-bb6f-fa7353af93b8.png" alt="Collar de Oro Minimalista" loading="lazy">
+                        <button class="product-wishlist" aria-label="Añadir a favoritos">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                        </button>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">Joyería Fina</div>
+                        <h3 class="product-name">Collar Minimalista Luna</h3>
+                        <p class="product-desc">Sutil collar con medallón de luna en oro laminado de alta calidad.</p>
+                        <div class="product-bottom">
+                            <span class="product-price">€185</span>
+                            <button class="add-cart-btn" data-name="Collar Minimalista Luna" data-price="185.00" data-img="https://image.qwenlm.ai/public_source/ed472311-7cac-4dbe-844a-49fa11cff082/1d7c0d274-5c50-4da9-bb6f-fa7353af93b8.png" aria-label="Añadir al carrito">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5V19M5 12H19"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="section about" id="nosotros">
+        <div class="section-container">
+            <div class="about-grid">
+                <div class="about-image fade-in">
+                    <img src="https://image.qwenlm.ai/public_source/ed472311-7cac-4dbe-844a-49fa11cff082/1d77342dc-2881-415c-ae00-d9a03f75113f.png" alt="Taller artesanal" loading="lazy">
+                    <div class="about-image-badge">
+                        <div class="number">15+</div>
+                        <div class="label">Años de experiencia</div>
+                    </div>
+                </div>
+                <div class="about-content fade-in">
+                    <span class="section-label">Nuestra Historia</span>
+                    <h2 class="section-title">Hecho a Mano con Pasión y Propósito</h2>
+                    <p class="about-text">
+                        En Alma & Esencia, creemos que la verdadera belleza nace de la naturaleza y se perfecciona con el arte. Desde nuestro pequeño taller, cada jabón se elabora con ingredientes orgánicos seleccionados a mano, y cada joya se diseña para resaltar la elegancia natural de quien la lleva.
+                    </p>
+                    <div class="values-grid">
+                        <div class="value-item">
+                            <div class="value-icon">🌱</div>
+                            <div>
+                                <h4>Ingredientes Naturales</h4>
+                                <p>100% orgánicos y libres de químicos agresivos</p>
+                            </div>
+                        </div>
+                        <div class="value-item">
+                            <div class="value-icon">💎</div>
+                            <div>
+                                <h4>Oro & Plata Certificada</h4>
+                                <p>Materiales nobles con certificación de pureza</p>
+                            </div>
+                        </div>
+                        <div class="value-item">
+                            <div class="value-icon"></div>
+                            <div>
+                                <h4>Empaques Sostenibles</h4>
+                                <p>Envases reciclables y biodegradables</p>
+                            </div>
+                        </div>
+                        <div class="value-item">
+                            <div class="value-icon">🤝</div>
+                            <div>
+                                <h4>Comercio Justo</h4>
+                                <p>Apoyamos a comunidades artesanales locales</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="section testimonials" id="testimonios">
+        <div class="section-container">
+            <div class="section-header fade-in">
+                <span class="section-label">Testimonios</span>
+                <h2 class="section-title">Lo Que Dicen Nuestros Clientes</h2>
+                <p class="section-desc">La satisfacción de nuestros clientes es nuestra mayor recompensa. Estas son algunas de sus experiencias.</p>
+                <div class="divider"></div>
+            </div>
+
+            <div style="overflow:hidden;" class="fade-in">
+                <div class="testimonials-track" id="testimonialsTrack">
+                    <div class="testimonial-card">
+                        <div class="testimonial-quote">"</div>
+                        <div class="testimonial-stars">★★★★★</div>
+                        <p class="testimonial-text">Los jabones de lavanda son increíbles. Mi piel nunca había estado tan suave e hidratada. Además, el aroma es divino y dura todo el día.</p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">MC</div>
+                            <div class="testimonial-author-info">
+                                <h5>María Castellanos</h5>
+                                <span>Madrid, España</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-quote">"</div>
+                        <div class="testimonial-stars">★★★★★</div>
+                        <p class="testimonial-text">Compré el anillo solitario como regalo de aniversario y mi esposa quedó encantada. La calidad del oro y el acabado son excepcionales.</p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">JR</div>
+                            <div class="testimonial-author-info">
+                                <h5>Javier Rodríguez</h5>
+                                <span>Barcelona, España</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-quote">"</div>
+                        <div class="testimonial-stars">★★★★★</div>
+                        <p class="testimonial-text">Me encanta que todo sea artesanal y sostenible. Los pendientes de perla son delicados y elegantes. Sin duda, volveré a comprar.</p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">LP</div>
+                            <div class="testimonial-author-info">
+                                <h5>Laura Prieto</h5>
+                                <span>Valencia, España</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-quote">"</div>
+                        <div class="testimonial-stars">★★★★★</div>
+                        <p class="testimonial-text">El jabón de miel y avena es perfecto para mi piel sensible. Se nota la calidad de los ingredientes. ¡100% recomendado!</p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">AG</div>
+                            <div class="testimonial-author-info">
+                                <h5>Ana García</h5>
+                                <span>Sevilla, España</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="testimonial-quote">"</div>
+                        <div class="testimonial-stars">★★★★★</div>
+                        <p class="testimonial-text">El collar minimalista es simplemente precioso. Lo uso todos los días y siempre recibo cumplidos. La atención al cliente fue excelente.</p>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">CM</div>
+                            <div class="testimonial-author-info">
+                                <h5>Carmen Martín</h5>
+                                <span>Bilbao, España</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonials-nav">
+                <button id="prevTest" aria-label="Testimonio anterior">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 12H5M12 19L5 12L12 5"/></svg>
+                </button>
+                <button id="nextTest" aria-label="Testimonio siguiente">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12H19M12 5L19 12L12 19"/></svg>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEWSLETTER -->
+    <section class="section newsletter" id="contacto">
+        <div class="section-container">
+            <div class="newsletter-content fade-in">
+                <span class="section-label">Newsletter</span>
+                <h2 class="section-title">Únete a Nuestra Comunidad</h2>
+                <p class="section-desc">Recibe ofertas exclusivas, novedades de nuestra colección y consejos de cuidado personal directamente en tu correo.</p>
+                <form class="newsletter-form" id="newsletterForm">
+                    <input type="email" id="emailInput" placeholder="Tu correo electrónico" required aria-label="Correo electrónico">
+                    <button type="submit" class="btn btn-primary">Suscribirse</button>
+                </form>
+                <p class="error-msg" id="emailError">Por favor, introduce un correo electrónico válido.</p>
+                <div class="newsletter-success" id="newsletterSuccess">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 6L9 17L4 12"/></svg>
+                    ¡Gracias por suscribirte! Te enviaremos nuestras novedades pronto.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="#" class="logo">
+                        <svg class="logo-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="16" cy="16" r="15" stroke="#C5A059" stroke-width="1.5"/>
+                            <path d="M16 8C16 8 10 14 10 18C10 21.31 12.69 24 16 24C19.31 24 22 21.31 22 18C22 14 16 8 16 8Z" fill="#C5A059" opacity="0.3"/>
+                            <path d="M16 10C16 10 12 14 12 17C12 19.21 13.79 21 16 21C18.21 21 20 19.21 20 17C20 14 16 10 16 10Z" fill="#C5A059"/>
+                        </svg>
+                        Alma & Esencia
+                    </a>
+                    <p>Creando belleza natural y elegancia artesanal desde 2009. Cada producto refleja nuestra pasión por la calidad y el respeto por la naturaleza.</p>
+                    <div class="footer-social">
+                        <a href="#" aria-label="Instagram">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
+                        </a>
+                        <a href="#" aria-label="Facebook">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 2H15C13.3431 2 12 3.34315 12 5V8H9V12H12V22H16V12H19L20 8H16V5C16 4.44772 16.4477 4 17 4H20V2H18Z"/></svg>
+                        </a>
+                        <a href="#" aria-label="Pinterest">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C6.477 2 2 6.477 2 12C2 16.086 4.388 19.617 7.868 21.322L7.5 17.5L9 14C8.7 13.2 8.5 12.3 8.5 11.5C8.5 9.5 10 8 12 8C13.8 8 15 9.2 15 11C15 12.8 13.8 13.5 13 13.5C12.2 13.5 11.8 13 11.8 12.5C11.8 12 12 11.5 12.5 11.2C12.8 11 13.2 11.2 13.5 11.5C14 12 14 13 13.5 14C13 15 12.5 15.5 12 16C11.5 16.5 11 17 11.5 18L12.5 22"/></svg>
+                        </a>
+                        <a href="#" aria-label="Twitter">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4L11.071 13.071M20 4L12.929 13.071M4 20L11.071 10.929M20 20L12.929 10.929"/></svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Tienda</h4>
+                    <ul>
+                        <li><a href="#">Jabones Artesanales</a></li>
+                        <li><a href="#">Joyas Finas</a></li>
+                        <li><a href="#">Sets de Regalo</a></li>
+                        <li><a href="#">Novedades</a></li>
+                        <li><a href="#">Ofertas</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Información</h4>
+                    <ul>
+                        <li><a href="#">Sobre Nosotros</a></li>
+                        <li><a href="#">Envíos y Entregas</a></li>
+                        <li><a href="#">Devoluciones</a></li>
+                        <li><a href="#">Preguntas Frecuentes</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contacto</h4>
+                    <ul>
+                        <li><a href="mailto:hola@almaesencia.com">hola@almaesencia.com</a></li>
+                        <li><a href="tel:+34900123456">+34 900 123 456</a></li>
+                        <li><a href="#">Calle Artesanía 12, Madrid</a></li>
+                        <li><a href="#">Lun - Vie: 9:00 - 18:00</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Alma & Esencia. Todos los derechos reservados.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Política de Privacidad</a>
+                    <a href="#">Términos de Uso</a>
+                    <a href="#">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- CART OVERLAY -->
+    <div class="cart-overlay" id="cartOverlay"></div>
+
+    <!-- CART SIDEBAR -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3>Tu Carrito (<span id="cartItemCount">0</span>)</h3>
+            <button class="cart-close" id="cartClose" aria-label="Cerrar carrito">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6L18 18"/></svg>
+            </button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <div class="cart-empty" id="cartEmpty">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6V20C3 20.5304 3.21071 21.0391 3.58579 21.4142C3.96086 21.7893 4.46957 22 5 22H19C19.5304 22 20.0391 21.7893 20.4142 21.4142C20.7893 21.0391 21 20.5304 21 20V6L18 2H6Z"/><path d="M3 6H21"/><path d="M16 10C16 11.0609 15.5786 12.0783 14.8284 12.8284C14.0783 13.5786 13.0609 14 12 14C10.9391 14 9.92172 13.5786 9.17157 12.8284C8.42143 12.0783 8 11.0609 8 10"/></svg>
+                <p>Tu carrito está vacío</p>
+                <small>Explora nuestra colección y encuentra algo especial</small>
+            </div>
+        </div>
+        <div class="cart-footer" id="cartFooter" style="display:none;">
+            <div class="cart-total">
+                <span>Total:</span>
+                <strong id="cartTotal">€0.00</strong>
+            </div>
+            <button class="checkout-btn">Proceder al Pago</button>
+        </div>
+    </div>
+
+    <!-- TOAST -->
+    <div class="toast" id="toast">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 6L9 17L4 12"/></svg>
+        <span id="toastMsg">Producto añadido al carrito</span>
+    </div>
+
+    <!-- SCROLL TO TOP -->
+    <button class="scroll-top" id="scrollTop" aria-label="Volver arriba">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 19V5M5 12L12 5L19 12"/></svg>
+    </button>
+
+    <script>
+        (function() {
+            'use strict';
+
+            // ===== CART STATE =====
+            var cartProducts = [];
+
+            // ===== DOM ELEMENTS =====
+            var header = document.getElementById('header');
+            var hamburgerBtn = document.getElementById('hamburgerBtn');
+            var navMobile = document.getElementById('navMobile');
+            var cartBtn = document.getElementById('cartBtn');
+            var cartCount = document.getElementById('cartCount');
+            var cartOverlay = document.getElementById('cartOverlay');
+            var cartSidebar = document.getElementById('cartSidebar');
+            var cartClose = document.getElementById('cartClose');
+            var cartItems = document.getElementById('cartItems');
+            var cartEmpty = document.getElementById('cartEmpty');
+            var cartFooter = document.getElementById('cartFooter');
+            var cartItemCount = document.getElementById('cartItemCount');
+            var cartTotal = document.getElementById('cartTotal');
+            var toast = document.getElementById('toast');
+            var toastMsg = document.getElementById('toastMsg');
+            var scrollTopBtn = document.getElementById('scrollTop');
+            var newsletterForm = document.getElementById('newsletterForm');
+            var emailInput = document.getElementById('emailInput');
+            var emailError = document.getElementById('emailError');
+            var newsletterSuccess = document.getElementById('newsletterSuccess');
+            var prevTest = document.getElementById('prevTest');
+            var nextTest = document.getElementById('nextTest');
+            var testimonialsTrack = document.getElementById('testimonialsTrack');
+
+            // ===== HEADER SCROLL =====
+            var lastScroll = 0;
+            window.addEventListener('scroll', function() {
+                var currentScroll = window.pageYOffset;
+                if (currentScroll > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+                if (currentScroll > 500) {
+                    scrollTopBtn.classList.add('visible');
+                } else {
+                    scrollTopBtn.classList.remove('visible');
+                }
+                lastScroll = currentScroll;
+            });
+
+            // ===== SCROLL TO TOP =====
+            scrollTopBtn.addEventListener('click', function() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            // ===== MOBILE MENU =====
+            hamburgerBtn.addEventListener('click', function() {
+                hamburgerBtn.classList.toggle('active');
+                navMobile.classList.toggle('open');
+                document.body.style.overflow = navMobile.classList.contains('open') ? 'hidden' : '';
+            });
+
+            var mobileLinks = document.querySelectorAll('.nav-mobile-link');
+            mobileLinks.forEach(function(link) {
+                link.addEventListener('click', function() {
+                    hamburgerBtn.classList.remove('active');
+                    navMobile.classList.remove('open');
+                    document.body.style.overflow = '';
+                });
+            });
+
+            // ===== PRODUCT TABS =====
+            var productTabs = document.querySelectorAll('.product-tab');
+            var productCards = document.querySelectorAll('.product-card');
+
+            productTabs.forEach(function(tab) {
+                tab.addEventListener('click', function() {
+                    productTabs.forEach(function(t) { t.classList.remove('active'); });
+                    tab.classList.add('active');
+                    var filter = tab.getAttribute('data-filter');
+                    productCards.forEach(function(card) {
+                        if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                            card.style.display = 'block';
+                            setTimeout(function() {
+                                card.style.opacity = '1';
+                                card.style.transform = 'translateY(0)';
+                            }, 50);
+                        } else {
+                            card.style.opacity = '0';
+                            card.style.transform = 'translateY(20px)';
+                            setTimeout(function() {
+                                card.style.display = 'none';
+                            }, 300);
+                        }
+                    });
+                });
+            });
+
+            // ===== ADD TO CART =====
+            var addCartBtns = document.querySelectorAll('.add-cart-btn');
+            addCartBtns.forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    var name = btn.getAttribute('data-name');
+                    var price = parseFloat(btn.getAttribute('data-price'));
+                    var img = btn.getAttribute('data-img');
+
+                    var existing = cartProducts.find(function(item) { return item.name === name; });
+                    if (existing) {
+                        existing.qty++;
+                    } else {
+                        cartProducts.push({ name: name, price: price, img: img, qty: 1 });
+                    }
+
+                    btn.classList.add('added');
+                    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17L4 12"/></svg>';
+                    setTimeout(function() {
+                        btn.classList.remove('added');
+                        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5V19M5 12H19"/></svg>';
+                    }, 1500);
+
+                    updateCartUI();
+                    showToast(name + ' añadido al carrito');
+                });
+            });
+
+            // ===== UPDATE CART UI =====
+            function updateCartUI() {
+                var totalItems = cartProducts.reduce(function(sum, item) { return sum + item.qty; }, 0);
+                var totalPrice = cartProducts.reduce(function(sum, item) { return sum + (item.price * item.qty); }, 0);
+
+                cartCount.textContent = totalItems;
+                if (totalItems > 0) {
+                    cartCount.classList.add('visible');
+                } else {
+                    cartCount.classList.remove('visible');
+                }
+
+                cartItemCount.textContent = totalItems;
+                cartTotal.textContent = '€' + totalPrice.toFixed(2);
+
+                if (cartProducts.length === 0) {
+                    cartEmpty.style.display = 'block';
+                    cartFooter.style.display = 'none';
+                    var cartItemElements = cartItems.querySelectorAll('.cart-item');
+                    cartItemElements.forEach(function(el) { el.remove(); });
+                } else {
+                    cartEmpty.style.display = 'none';
+                    cartFooter.style.display = 'block';
+
+                    var existingItems = cartItems.querySelectorAll('.cart-item');
+                    existingItems.forEach(function(el) { el.remove(); });
+
+                    cartProducts.forEach(function(product, index) {
+                        var item = document.createElement('div');
+                        item.className = 'cart-item';
+                        item.innerHTML =
+                            '<div class="cart-item-image"><img src="' + product.img + '" alt="' + product.name + '"></div>' +
+                            '<div class="cart-item-details">' +
+                                '<div class="cart-item-name">' + product.name + '</div>' +
+                                '<div class="cart-item-price">€' + product.price.toFixed(2) + '</div>' +
+                                '<div class="cart-item-qty">' +
+                                    '<button class="qty-minus" data-index="' + index + '">−</button>' +
+                                    '<span>' + product.qty + '</span>' +
+                                    '<button class="qty-plus" data-index="' + index + '">+</button>' +
+                                '</div>' +
+                            '</div>' +
+                            '<button class="cart-item-remove" data-index="' + index + '" aria-label="Eliminar">' +
+                                '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6L18 18"/></svg>' +
+                            '</button>';
+                        cartItems.appendChild(item);
+                    });
+
+                    var qtyMinusBtns = cartItems.querySelectorAll('.qty-minus');
+                    var qtyPlusBtns = cartItems.querySelectorAll('.qty-plus');
+                    var removeBtns = cartItems.querySelectorAll('.cart-item-remove');
+
+                    qtyMinusBtns.forEach(function(btn) {
+                        btn.addEventListener('click', function() {
+                            var idx = parseInt(btn.getAttribute('data-index'));
+                            cartProducts[idx].qty--;
+                            if (cartProducts[idx].qty <= 0) {
+                                cartProducts.splice(idx, 1);
+                            }
+                            updateCartUI();
+                        });
+                    });
+
+                    qtyPlusBtns.forEach(function(btn) {
+                        btn.addEventListener('click', function() {
+                            var idx = parseInt(btn.getAttribute('data-index'));
+                            cartProducts[idx].qty++;
+                            updateCartUI();
+                        });
+                    });
+
+                    removeBtns.forEach(function(btn) {
+                        btn.addEventListener('click', function() {
+                            var idx = parseInt(btn.getAttribute('data-index'));
+                            cartProducts.splice(idx, 1);
+                            updateCartUI();
+                        });
+                    });
+                }
+            }
+
+            // ===== CART SIDEBAR TOGGLE =====
+            function openCart() {
+                cartOverlay.classList.add('open');
+                cartSidebar.classList.add('open');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeCart() {
+                cartOverlay.classList.remove('open');
+                cartSidebar.classList.remove('open');
+                document.body.style.overflow = '';
+            }
+
+            cartBtn.addEventListener('click', openCart);
+            cartClose.addEventListener('click', closeCart);
+            cartOverlay.addEventListener('click', closeCart);
+
+            // ===== TOAST =====
+            function showToast(message) {
+                toastMsg.textContent = message;
+                toast.classList.add('show');
+                setTimeout(function() {
+                    toast.classList.remove('show');
+                }, 2500);
+            }
+
+            // ===== TESTIMONIALS CAROUSEL =====
+            var testimonialIndex = 0;
+            var cardsPerView = 3;
+
+            function updateCardsPerView() {
+                var width = window.innerWidth;
+                if (width <= 768) {
+                    cardsPerView = 1;
+                } else if (width <= 1024) {
+                    cardsPerView = 2;
+                } else {
+                    cardsPerView = 3;
+                }
+            }
+
+            updateCardsPerView();
+            window.addEventListener('resize', function() {
+                updateCardsPerView();
+                moveTestimonials();
+            });
+
+            function moveTestimonials() {
+                var track = testimonialsTrack;
+                var allCards = track.querySelectorAll('.testimonial-card');
+                var totalCards = allCards.length;
+                var maxIndex = Math.max(0, totalCards - cardsPerView);
+
+                if (testimonialIndex > maxIndex) testimonialIndex = maxIndex;
+                if (testimonialIndex < 0) testimonialIndex = 0;
+
+                var cardWidth = allCards[0].offsetWidth + 32;
+                track.style.transform = 'translateX(-' + (testimonialIndex * cardWidth) + 'px)';
+            }
+
+            prevTest.addEventListener('click', function() {
+                testimonialIndex--;
+                if (testimonialIndex < 0) testimonialIndex = 0;
+                moveTestimonials();
+            });
+
+            nextTest.addEventListener('click', function() {
+                var totalCards = testimonialsTrack.querySelectorAll('.testimonial-card').length;
+                var maxIndex = totalCards - cardsPerView;
+                testimonialIndex++;
+                if (testimonialIndex > maxIndex) testimonialIndex = 0;
+                moveTestimonials();
+            });
+
+            // ===== NEWSLETTER =====
+            newsletterForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                var email = emailInput.value.trim();
+                var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+                if (!emailRegex.test(email)) {
+                    emailError.classList.add('visible');
+                    emailInput.style.borderColor = '#E53935';
+                    return;
+                }
+
+                emailError.classList.remove('visible');
+                emailInput.style.borderColor = '';
+                newsletterForm.style.display = 'none';
+                newsletterSuccess.classList.add('visible');
+                emailInput.value = '';
+            });
+
+            emailInput.addEventListener('input', function() {
+                emailError.classList.remove('visible');
+                emailInput.style.borderColor = '';
+            });
+
+            // ===== WISHLIST BUTTONS =====
+            var wishlistBtns = document.querySelectorAll('.product-wishlist');
+            wishlistBtns.forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    btn.classList.toggle('active');
+                    var svg = btn.querySelector('svg');
+                    if (btn.classList.contains('active')) {
+                        svg.setAttribute('fill', '#B88A8A');
+                        svg.setAttribute('stroke', '#B88A8A');
+                    } else {
+                        svg.setAttribute('fill', 'none');
+                        svg.setAttribute('stroke', 'currentColor');
+                    }
+                });
+            });
+
+            // ===== INTERSECTION OBSERVER FOR FADE-IN =====
+            var fadeElements = document.querySelectorAll('.fade-in');
+            var observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            var fadeObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        fadeObserver.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            fadeElements.forEach(function(el) {
+                fadeObserver.observe(el);
+            });
+
+            // ===== SMOOTH SCROLL FOR ANCHOR LINKS =====
+            document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+                anchor.addEventListener('click', function(e) {
+                    var targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    var targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        e.preventDefault();
+                        var headerHeight = header.offsetHeight;
+                        var targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+                        window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+                    }
+                });
+            });
+
+            // ===== CHECKOUT BUTTON =====
+            document.querySelector('.checkout-btn').addEventListener('click', function() {
+                if (cartProducts.length > 0) {
+                    showToast('¡Redirigiendo al pago seguro!');
+                }
+            });
+
+        })();
+    </script>
+</body>
+</html>
+
